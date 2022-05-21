@@ -1,3 +1,4 @@
+// picks r p or s randomly (surely mathrandom is truly random Clueless)
 function cpuPick() {
     let choice = Math.floor(Math.random() * 3);
     if (choice === 0) {
@@ -9,21 +10,37 @@ function cpuPick() {
     }
 }
 
+// 1 round; checks if cpu or player win
 function playRound(plrSel, cpuSel) {
     if (plrSel === cpuSel) {
-        return `Draw: PLR: ${plrSel}; CPU: ${cpuSel}`;
+        console.log(`Draw: PLR: ${plrSel}; CPU: ${cpuSel}`);
     }
     if (plrSel === 'rock' && cpuSel === 'scissors') {
-        return `PLR wins: PLR ${plrSel}; CPU: ${cpuSel}`;
+        plrCount++;
+        console.log(`PLR wins: PLR ${plrSel}; CPU: ${cpuSel}`);
     } else if (plrSel === 'paper' && cpuSel === 'rock') {
-        return `PLR wins: PLR ${plrSel}; CPU: ${cpuSel}`;
+        plrCount++;
+        console.log(`PLR wins: PLR ${plrSel}; CPU: ${cpuSel}`);
     } else if (plrSel === 'scissors' && cpuSel === 'paper') {
-        return `PLR wins: PLR ${plrSel}; CPU: ${cpuSel}`;
+        plrCount++;
+        console.log(`PLR wins: PLR ${plrSel}; CPU: ${cpuSel}`);
     } else {
-        return `CPU wins: PLR ${plrSel}; CPU: ${cpuSel}`;
+        cpuCount++;
+        console.log(`CPU wins: PLR ${plrSel}; CPU: ${cpuSel}`);
     }
 }
 
-const playerSelection = 'paper';
-const computerSelection = cpuPick();
-console.log(playRound(playerSelection, computerSelection));
+// play 5 rounds
+function game() {
+    for (let i = 0; i < 5; i++) {
+        let playerSelection = prompt('Pick ROCK PAPER OR SCISSORS (lowercase cause i didnt do toLowercase implementation :) )');
+        let computerSelection = cpuPick();
+        playRound();
+    }
+    console.log(`Stats after 5 rounds: PLR: ${plrCount} - CPU: ${cpuCount}`);
+}
+
+let plrCount = 0;
+let cpuCount = 0;
+
+game();
