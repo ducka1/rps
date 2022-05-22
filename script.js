@@ -11,7 +11,7 @@ function computerPlay() {
     }
 }
 
-// plays a round of rps and increments the winning side's counter
+// plays a round of rps and increments the winning side counter
 function playRound(playerSelection, computerSelection) {
     if (playerSelection === computerSelection) {
         console.log(`It's a draw! Both picked ${playerSelection}.`);
