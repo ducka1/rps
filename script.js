@@ -1,46 +1,54 @@
-// picks r p or s randomly (surely mathrandom is truly random Clueless)
-function cpuPick() {
-    let choice = Math.floor(Math.random() * 3);
-    if (choice === 0) {
+// picks random number 0-2 and translates to rock paper or scissors
+// surely math.random is truly random Clueless
+function computerPlay() {
+    let randomNumber = Math.floor(Math.random() * 3);
+    if (randomNumber === 0) {
         return 'rock';
-    } else if (choice === 1) {
+    } else if (randomNumber === 1) {
         return 'paper';
     } else {
         return 'scissors';
     }
 }
 
-// 1 round; checks if cpu or player win
-function playRound(plrSel, cpuSel) {
-    if (plrSel === cpuSel) {
-        console.log(`Draw: PLR: ${plrSel}; CPU: ${cpuSel}`);
-    }
-    if (plrSel === 'rock' && cpuSel === 'scissors') {
-        plrCount++;
-        console.log(`PLR wins: PLR ${plrSel}; CPU: ${cpuSel}`);
-    } else if (plrSel === 'paper' && cpuSel === 'rock') {
-        plrCount++;
-        console.log(`PLR wins: PLR ${plrSel}; CPU: ${cpuSel}`);
-    } else if (plrSel === 'scissors' && cpuSel === 'paper') {
-        plrCount++;
-        console.log(`PLR wins: PLR ${plrSel}; CPU: ${cpuSel}`);
+// plays a round of rps and increments the winning side's counter
+function playRound(playerSelection, computerSelection) {
+    if (playerSelection === computerSelection) {
+        console.log(`It's a draw! Both picked ${playerSelection}.`);
+        return 0;
+    } else if (playerSelection === 'rock' && computerSelection === 'scissors') {
+        console.log(`You win! ${playerSelection} beats ${computerSelection}`);
+        return playerWinCount++;
+    } else if (playerSelection === 'paper' && computerSelection === 'rock') {
+        console.log(`You win! ${playerSelection} beats ${computerSelection}`);
+        return playerWinCount++;
+    } else if (playerSelection === 'scissors' && computerSelection === 'paper') {
+        console.log(`You win! ${playerSelection} beats ${computerSelection}`);
+        return playerWinCount++;
     } else {
-        cpuCount++;
-        console.log(`CPU wins: PLR ${plrSel}; CPU: ${cpuSel}`);
+        console.log(`You lose! ${computerSelection} beats ${playerSelection}`);
+        return computerWinCount++;
     }
 }
 
-// play 5 rounds
+// plays a 5 round game and prints the winner
 function game() {
     for (let i = 0; i < 5; i++) {
-        let playerSelection = prompt('Pick ROCK PAPER OR SCISSORS (lowercase cause i didnt do toLowercase implementation :) )');
-        let computerSelection = cpuPick();
-        playRound();
+        let playerSelection = prompt('Choose rock, paper or scissors.').toLowerCase();
+        let computerSelection = computerPlay();
+        playRound(playerSelection, computerSelection);
+        console.log(`Current score: ${playerWinCount} - ${computerWinCount}`);
     }
-    console.log(`Stats after 5 rounds: PLR: ${plrCount} - CPU: ${cpuCount}`);
+    if (playerWinCount === computerWinCount) {
+        console.log("GAME OVER: It's a draw!")
+    } else if (playerWinCount > computerWinCount) {
+        console.log('GAME OVER: Player wins!')
+    } else {
+        console.log('GAME OVER: Computer wins!')
+    }
 }
 
-let plrCount = 0;
-let cpuCount = 0;
+let playerWinCount = 0;
+let computerWinCount = 0;
 
 game();
