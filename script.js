@@ -1,5 +1,3 @@
-// picks random number 0-2 and translates to rock paper or scissors
-// surely math.random is truly random Clueless
 function computerPlay() {
     let randomNumber = Math.floor(Math.random() * 3);
     if (randomNumber === 0) {
@@ -11,44 +9,52 @@ function computerPlay() {
     }
 }
 
-// plays a round of rps and increments the winning side counter
 function playRound(playerSelection, computerSelection) {
+    picked.textContent = `PLR picked ${playerSelection} | CPU picked ${computerSelection}`;
     if (playerSelection === computerSelection) {
-        console.log(`It's a draw! Both picked ${playerSelection}.`);
+        result.textContent = `It's a draw! Both picked ${playerSelection}.`;
         return 0;
     } else if (playerSelection === 'rock' && computerSelection === 'scissors') {
-        console.log(`You win! ${playerSelection} beats ${computerSelection}`);
+        result.textContent = `You win! ${playerSelection} beats ${computerSelection}`;
         return playerWinCount++;
     } else if (playerSelection === 'paper' && computerSelection === 'rock') {
-        console.log(`You win! ${playerSelection} beats ${computerSelection}`);
+        result.textContent = `You win! ${playerSelection} beats ${computerSelection}`;
         return playerWinCount++;
     } else if (playerSelection === 'scissors' && computerSelection === 'paper') {
-        console.log(`You win! ${playerSelection} beats ${computerSelection}`);
+        result.textContent = `You win! ${playerSelection} beats ${computerSelection}`;
         return playerWinCount++;
     } else {
-        console.log(`You lose! ${computerSelection} beats ${playerSelection}`);
+        result.textContent = `You lose! ${computerSelection} beats ${playerSelection}`;
         return computerWinCount++;
-    }
-}
-
-// plays a 5 round game and prints the winner
-function game() {
-    for (let i = 0; i < 5; i++) {
-        let playerSelection = prompt('Choose rock, paper or scissors.').toLowerCase();
-        let computerSelection = computerPlay();
-        playRound(playerSelection, computerSelection);
-        console.log(`Current score: ${playerWinCount} - ${computerWinCount}`);
-    }
-    if (playerWinCount === computerWinCount) {
-        console.log("GAME OVER: It's a draw!")
-    } else if (playerWinCount > computerWinCount) {
-        console.log('GAME OVER: Player wins!')
-    } else {
-        console.log('GAME OVER: Computer wins!')
     }
 }
 
 let playerWinCount = 0;
 let computerWinCount = 0;
 
-game();
+const display = document.querySelector('.display');
+const final = document.querySelector('#final')
+const result = document.createElement('p');
+const picked = document.createElement('p');
+const score = document.createElement('p');
+
+display.appendChild(picked);
+display.appendChild(result);
+display.appendChild(score);
+
+const buttons = document.querySelectorAll('.btn');
+
+buttons.forEach((button) => {
+    button.addEventListener('click', (event) => {
+        playerSelection = event.target.id;
+        computerSelection = computerPlay();
+        playRound(playerSelection, computerSelection);
+        score.textContent = `PLR ${playerWinCount} - ${computerWinCount} CPU`;
+        if (playerWinCount === 5) {
+            final.textContent = 'Player wins';
+        }
+        if (computerWinCount === 5) {
+            final.textContent = 'Computer wins';
+        }
+    });
+});
